@@ -1,0 +1,45 @@
+mySql:
+  - name: user-db                     # Required
+    enabled: true                     # Required
+    domain: "*"                       # Optional
+    addr: "localhost:13306"           # Optional, default: localhost:3306
+    user: root                        # Optional, default: root
+    pass: "123456"                    # Optional, default: pass
+    protocol: tcp
+    database:
+      - name: rk-boot                 # Required
+#        autoCreate: false             # Optional, create database automatically, default: false
+#        dryRun: false                # Optional, default: false
+        params: ["charset=utf8","parseTime=True","loc=Local"]                   # Optional, default: ["charset=utf8mb4","parseTime=True","loc=Local"]
+    logger:
+      level: info
+      outputPaths: [ "log/db.log" ]
+redis:
+  - name: redis                      # Required
+    enabled: true                    # Required
+    addrs: ["localhost:6379"]        # Required, One addr is for single, multiple is for cluster
+gin:
+  - name: greeter
+    port: 8080                    # 监听端口
+    enabled: true                 # 开启 gin 微服务
+    sw:
+      enabled: true               # 开启 Swagger UI，默认路径为 /sw
+    docs:
+      enabled: true               # 开启 API Doc UI，默认路径为 /docs
+    middleware:
+      logging:
+        enabled: true             # 开启 API 日志中间件
+      jwt:
+        enabled: true
+        ignore: [ "/v1/login" ]
+        symmetric:
+          algorithm: HS256
+          token: "my-secret"
+          tokenPath: ""
+          signerEntry: ""
+        authScheme: "Bearer"
+        tokenLookup: "header:Authorization"
+      prom:
+        enabled: true             # 开启 API Prometheus 中间件,默认路径为 /metrics
+      meta:
+        enabled: true             # 开启 API 原数据中间件，自动生成 RequestID
