@@ -30,3 +30,7 @@
 2024-04-17T11:10:50.966+0800	INFO	mysql@v1.4.3/migrator.go:255	[2.052ms] [rows:-] SELECT DATABASE()
 2024-04-17T11:10:50.971+0800	INFO	mysql@v1.4.3/migrator.go:258	[4.546ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'rk-boot%' ORDER BY SCHEMA_NAME='rk-boot' DESC,SCHEMA_NAME limit 1
 2024-04-17T11:10:50.976+0800	INFO	rk-boot/main.go:65	[4.439ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'rk-boot' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+2024-04-23T18:11:38.971+0800	INFO	mysql@v1.2.19/boot.go:378	Bootstrap MySqlEntry	{"eventId": "6140233d-6390-46d0-ba85-77352acd77e8", "entryName": "user-db", "entryType": "MySqlEntry"}
+2024-04-23T18:11:38.972+0800	INFO	mysql@v1.2.19/boot.go:522	Connecting to database [rk-boot]
+2024-04-23T18:11:38.976+0800	ERROR	mysql@v1.2.19/boot.go:526	failed to initialize database, got error dial tcp [::1]:13306: connect: connection refused
+2024-04-23T18:11:38.976+0800	ERROR	mysql@v1.2.19/boot.go:383	Failed to connect to database	{"eventId": "6140233d-6390-46d0-ba85-77352acd77e8", "entryName": "user-db", "entryType": "MySqlEntry", "error": "dial tcp [::1]:13306: connect: connection refused"}
