@@ -9,13 +9,12 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/rookie-ninja/rk-boot/v2"
 	rkmysql "github.com/rookie-ninja/rk-db/mysql"
-	rks "github.com/rookie-ninja/rk-db/redis"
+	rkredis "github.com/rookie-ninja/rk-db/redis"
+	"github.com/rookie-ninja/rk-gin/v2/boot"
 	rkginctx "github.com/rookie-ninja/rk-gin/v2/middleware/context"
 	"gorm.io/gorm"
 	"net/http"
 	"time"
-
-	"github.com/rookie-ninja/rk-gin/v2/boot"
 )
 
 var MySecret = []byte("my-secret")
@@ -24,10 +23,6 @@ var MySecret = []byte("my-secret")
 type CustomClaims struct {
 	Phone string `json:"phone"`
 	jwt.RegisteredClaims
-}
-
-type GreeterResponse struct {
-	Message string
 }
 
 var userDb *gorm.DB
@@ -46,13 +41,17 @@ type User struct {
 }
 
 func main() {
+	//worden_test.Test_HookFunc("aa")
+	//worden_test.Test_b("bb")
+	//return
+	//
 	boot := rkboot.NewBoot()
 	boot.Bootstrap(context.TODO())
 	entry := rkgin.GetGinEntry("greeter")
 	entry.Router.GET("/v1/get", Get)
 	entry.Router.POST("/v1/set", Set)
 
-	redisEntry := rks.GetRedisEntry("redis")
+	redisEntry := rkredis.GetRedisEntry("redis")
 	redisClient, _ = redisEntry.GetClient()
 
 	//JWT

@@ -1,0 +1,32 @@
+2024-04-16T21:39:12.321+0800	INFO	mysql@v1.2.19/boot.go:378	Bootstrap MySqlEntry	{"eventId": "df79a02a-13b5-4d65-a507-963d7b96e3b5", "entryName": "user-db", "entryType": "MySqlEntry"}
+2024-04-16T21:39:12.340+0800	INFO	mysql@v1.2.19/boot.go:522	Connecting to database [rk-boot]
+2024-04-16T21:39:12.360+0800	INFO	mysql@v1.2.19/boot.go:540	Connecting to database [rk-boot] success
+2024-04-16T21:43:52.730+0800	INFO	mysql@v1.2.19/boot.go:378	Bootstrap MySqlEntry	{"eventId": "2b206021-2dce-46e1-8403-fff9204478ee", "entryName": "user-db", "entryType": "MySqlEntry"}
+2024-04-16T21:43:52.747+0800	INFO	mysql@v1.2.19/boot.go:522	Connecting to database [rk-boot]
+2024-04-16T21:43:52.773+0800	INFO	mysql@v1.2.19/boot.go:540	Connecting to database [rk-boot] success
+2024-04-16T21:43:52.791+0800	INFO	mysql@v1.4.3/migrator.go:255	[2.487ms] [rows:-] SELECT DATABASE()
+2024-04-16T21:43:52.950+0800	INFO	mysql@v1.4.3/migrator.go:258	[158.799ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'rk-boot%' ORDER BY SCHEMA_NAME='rk-boot' DESC,SCHEMA_NAME limit 1
+2024-04-16T21:43:52.960+0800	INFO	rk-boot/main.go:67	[10.536ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'rk-boot' AND table_name = 'users' AND table_type = 'BASE TABLE'
+2024-04-16T21:43:53.180+0800	INFO	rk-boot/main.go:67	[219.490ms] [rows:0] CREATE TABLE `users` (`created_at` datetime(3) NULL,`updated_at` datetime(3) NULL,`deleted_at` datetime(3) NULL,`id` bigint AUTO_INCREMENT,`name` longtext,PRIMARY KEY (`id`),INDEX `idx_users_deleted_a...
+2024-04-16T21:57:32.146+0800	INFO	mysql@v1.2.19/boot.go:404	Interrupt MySqlEntry	{"eventId": "2b206021-2dce-46e1-8403-fff9204478ee", "entryName": "user-db", "entryType": "MySqlEntry"}
+2024-04-17T09:14:03.766+0800	INFO	mysql@v1.2.19/boot.go:378	Bootstrap MySqlEntry	{"eventId": "d4a9fe8b-a2c1-4947-ba7a-33931524a2a7", "entryName": "user-db", "entryType": "MySqlEntry"}
+2024-04-17T09:14:03.767+0800	INFO	mysql@v1.2.19/boot.go:522	Connecting to database [rk-boot]
+2024-04-17T09:14:03.779+0800	INFO	mysql@v1.2.19/boot.go:540	Connecting to database [rk-boot] success
+2024-04-17T09:14:03.792+0800	INFO	mysql@v1.4.3/migrator.go:255	[6.840ms] [rows:-] SELECT DATABASE()
+2024-04-17T09:14:03.946+0800	INFO	mysql@v1.4.3/migrator.go:258	[154.083ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'rk-boot%' ORDER BY SCHEMA_NAME='rk-boot' DESC,SCHEMA_NAME limit 1
+2024-04-17T09:14:03.967+0800	INFO	rk-boot/main.go:66	[20.451ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'rk-boot' AND table_name = 'users' AND table_type = 'BASE TABLE'
+2024-04-17T09:14:04.137+0800	INFO	rk-boot/main.go:66	[170.058ms] [rows:0] CREATE TABLE `users` (`created_at` datetime(3) NULL,`updated_at` datetime(3) NULL,`deleted_at` datetime(3) NULL,`id` bigint AUTO_INCREMENT,`name` longtext,PRIMARY KEY (`id`),INDEX `idx_users_deleted_a...
+2024-04-17T09:20:17.772+0800	INFO	mysql@v1.2.19/boot.go:404	Interrupt MySqlEntry	{"eventId": "d4a9fe8b-a2c1-4947-ba7a-33931524a2a7", "entryName": "user-db", "entryType": "MySqlEntry"}
+2024-04-17T11:10:50.680+0800	INFO	mysql@v1.2.19/boot.go:378	Bootstrap MySqlEntry	{"eventId": "c9662280-3f83-4306-b81d-d3878dba6806", "entryName": "user-db", "entryType": "MySqlEntry"}
+2024-04-17T11:10:50.681+0800	INFO	mysql@v1.2.19/boot.go:522	Connecting to database [rk-boot]
+2024-04-17T11:10:50.778+0800	INFO	mysql@v1.2.19/boot.go:540	Connecting to database [rk-boot] success
+2024-04-17T11:10:50.797+0800	INFO	mysql@v1.4.3/migrator.go:255	[4.924ms] [rows:-] SELECT DATABASE()
+2024-04-17T11:10:50.882+0800	INFO	mysql@v1.4.3/migrator.go:258	[84.752ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'rk-boot%' ORDER BY SCHEMA_NAME='rk-boot' DESC,SCHEMA_NAME limit 1
+2024-04-17T11:10:50.922+0800	INFO	rk-boot/main.go:65	[39.281ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'rk-boot' AND table_name = 'users' AND table_type = 'BASE TABLE'
+2024-04-17T11:10:50.923+0800	INFO	mysql@v1.4.3/migrator.go:255	[1.692ms] [rows:-] SELECT DATABASE()
+2024-04-17T11:10:50.930+0800	INFO	mysql@v1.4.3/migrator.go:258	[6.659ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'rk-boot%' ORDER BY SCHEMA_NAME='rk-boot' DESC,SCHEMA_NAME limit 1
+2024-04-17T11:10:50.950+0800	INFO	mysql@v1.4.3/migrator.go:168	[19.909ms] [rows:-] SELECT * FROM `users` LIMIT 1
+2024-04-17T11:10:50.964+0800	INFO	mysql@v1.4.3/migrator.go:186	[13.440ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM...
+2024-04-17T11:10:50.966+0800	INFO	mysql@v1.4.3/migrator.go:255	[2.052ms] [rows:-] SELECT DATABASE()
+2024-04-17T11:10:50.971+0800	INFO	mysql@v1.4.3/migrator.go:258	[4.546ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'rk-boot%' ORDER BY SCHEMA_NAME='rk-boot' DESC,SCHEMA_NAME limit 1
+2024-04-17T11:10:50.976+0800	INFO	rk-boot/main.go:65	[4.439ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'rk-boot' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'

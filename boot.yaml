@@ -1,4 +1,4 @@
-mySql:
+mysql:
   - name: user-db                     # Required
     enabled: true                     # Required
     domain: "*"                       # Optional
