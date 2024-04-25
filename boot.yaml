@@ -18,6 +18,11 @@ redis:
   - name: redis                      # Required
     enabled: false                    # Required
     addrs: ["localhost:6379"]        # Required, One addr is for single, multiple is for cluster
+logger:
+  - name: my-logger
+    level: info
+    zap:
+      outputPaths: ["log/log.log"]
 gin:
   - name: greeter
     port: 8080                    # 监听端口

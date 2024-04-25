@@ -11,6 +11,7 @@ import (
 	rkmysql "github.com/rookie-ninja/rk-db/mysql"
 	rkredis "github.com/rookie-ninja/rk-db/redis"
 	rkentry "github.com/rookie-ninja/rk-entry/v2/entry"
+	rkmid "github.com/rookie-ninja/rk-entry/v2/middleware"
 	"github.com/rookie-ninja/rk-gin/v2/boot"
 	rkginctx "github.com/rookie-ninja/rk-gin/v2/middleware/context"
 	_ "github.com/rookie-ninja/rk-grpc/v2/boot"
@@ -20,7 +21,8 @@ import (
 	"net/http"
 	"os"
 	"time"
-	apiv1 "tk-boot-worden/api/gen/v1"
+	"tk-boot-worden/api/gen/v1"
+	"tk-boot-worden/tools"
 )
 
 var MySecret = []byte("my-secret")
@@ -33,6 +35,7 @@ type CustomClaims struct {
 
 var userDb *gorm.DB
 var redisClient *redis.Client
+var logger *rkentry.LoggerEntry
 
 type Base struct {
 	CreatedAt time.Time      `yaml:"-" json:"-"`
@@ -55,22 +58,36 @@ func main() {
 	_ = os.Setenv("DEV_REGION", "qingdao")
 	boot := rkboot.NewBoot()
 
+	// Logger
+	logger = rkentry.GlobalAppCtx.GetLoggerEntry("my-logger")
+	logger.Info("This is my-logger")
+
 	// Grpc register
 	entryRpc := rkgrpc.GetGrpcEntry("greeter")
 	entryRpc.AddRegFuncGrpc(registerGreeter)
-	entryRpc.AddRegFuncGw(apiv1.RegisterGreeterHandlerFromEndpoint)
+	entryRpc.AddRegFuncGw(grt.RegisterGreeterHandlerFromEndpoint)
 
 	// Bootstrap
 	boot.Bootstrap(context.TODO())
 	entryGin := rkgin.GetGinEntry("greeter")
-	entryGin.Router.GET("/v1/get", GetRedis)
-	entryGin.Router.POST("/v1/set", SetRedis)
+
+	// Router Group
+	redisGroup := entryGin.Router.Group("v3")
+	{
+		redisGroup.GET("/demo_api", demoRequest)
+	}
+	redisGroup.Use(routerMiddle())
+
+	// Error
+	rkmid.SetErrorBuilder(&tools.MyErrorBuilder{})
 
 	// Redis
 	redisEntry := rkredis.GetRedisEntry("redis")
 	if redisEntry != nil {
 		redisClient, _ = redisEntry.GetClient()
 	}
+	entryGin.Router.GET("/v1/get", GetRedis)
+	entryGin.Router.POST("/v1/set", SetRedis)
 
 	// JWT
 	entryGin.Router.GET("/v1/jwt_token", JwtToken)
@@ -90,19 +107,49 @@ func main() {
 	// Config
 	fmt.Println(rkentry.GlobalAppCtx.GetConfigEntry("my-config").GetString("region"))
 
+	// Run
 	boot.WaitForShutdownSig(context.TODO())
+}
+//================================================
+func demoRequest(ctx *gin.Context) {
+	fmt.Println(" 我的测试 API! ")
+	logger.Info("我的测试 API!")
+}
+
+//================================================
+func routerMiddle() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		fmt.Println("路由分组中间件-before")
+		logger.Info("路由分组中间件-before")
+		// 可以在这里添加任何预处理逻辑，比如验证token、记录日志等
+		// ...
+		// 然后一定要调用c.Next()来传递给下一个处理器
+		c.Next()
+		fmt.Println("路由分组中间件-after")
+	}
 }
 //================================================
 type GreeterServer struct{}
 
 func registerGreeter(server *grpc.Server) {
-	apiv1.RegisterGreeterServer(server, &GreeterServer{})
+	grt.RegisterGreeterServer(server, &GreeterServer{})
 }
 
-func (server *GreeterServer) Hello(_ context.Context, _ *apiv1.HelloRequest) (*apiv1.HelloResponse, error) {
-	return &apiv1.HelloResponse{
+func (server *GreeterServer) Hello(_ context.Context, _ *grt.HelloRequest) (*grt.HelloResponse, error) {
+	return &grt.HelloResponse{
 		MyMessage: "hello!",
 	}, nil
+}
+func (server *GreeterServer) Person(_ context.Context, req *grt.PersonRequest) (*grt.PersonResponse, error) {
+	p := &grt.PersonResponse{
+		Id:    req.GetId(),
+		Name:  "worden",
+		Email: "rs@example.com",
+		Phones: []*grt.PersonResponse_PhoneNumber{
+			{Number: "555-4321", Type: grt.PersonResponse_HOME},
+		},
+	}
+	return p,nil
 }
 
 //================================================

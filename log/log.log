@@ -1,0 +1,56 @@
+2024-04-25T15:31:23.435+0800	INFO	rk-boot-worden/main.go:60	This is my-logger
+2024-04-25T15:44:53.406+0800	INFO	rk-boot-worden/main.go:62	This is my-logger
+2024-04-25T16:10:57.106+0800	INFO	rk-boot-worden/main.go:62	This is my-logger
+2024-04-25T16:22:42.282+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:22:57.532+0800	INFO	rk-boot-worden/main.go:114	我的测试 API!
+2024-04-25T16:27:25.233+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:27:32.485+0800	INFO	rk-boot-worden/main.go:115	我的测试 API!
+2024-04-25T16:27:47.973+0800	INFO	rk-boot-worden/main.go:115	我的测试 API!
+2024-04-25T16:32:05.114+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:32:05.117+0800	INFO	rk-boot-worden/main.go:121	===== -before
+2024-04-25T16:32:44.304+0800	INFO	rk-boot-worden/main.go:115	我的测试 API!
+2024-04-25T16:33:00.611+0800	INFO	rk-boot-worden/main.go:115	我的测试 API!
+2024-04-25T16:35:00.622+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:35:00.627+0800	INFO	rk-boot-worden/main.go:122	===== -before
+2024-04-25T16:35:06.412+0800	INFO	rk-boot-worden/main.go:116	我的测试 API!
+2024-04-25T16:40:49.606+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:40:49.613+0800	INFO	rk-boot-worden/main.go:122	===== -before
+2024-04-25T16:40:54.907+0800	INFO	rk-boot-worden/main.go:116	我的测试 API!
+2024-04-25T16:42:03.611+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:42:03.614+0800	INFO	rk-boot-worden/main.go:121	===== -before
+2024-04-25T16:42:09.702+0800	INFO	rk-boot-worden/main.go:115	我的测试 API!
+2024-04-25T16:42:20.899+0800	INFO	rk-boot-worden/main.go:115	我的测试 API!
+2024-04-25T16:43:33.145+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:45:07.969+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:45:07.972+0800	INFO	rk-boot-worden/main.go:128	===== -before
+2024-04-25T16:45:25.943+0800	INFO	rk-boot-worden/main.go:122	我的测试 API!
+2024-04-25T16:46:18.418+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:49:53.354+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:49:59.808+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:52:15.906+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:53:36.089+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T16:56:19.095+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:00:25.289+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:00:38.606+0800	INFO	rk-boot-worden/main.go:130	===== -before
+2024-04-25T17:01:40.105+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:01:55.201+0800	INFO	rk-boot-worden/main.go:130	===== -before
+2024-04-25T17:02:17.367+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:02:17.424+0800	INFO	rk-boot-worden/main.go:130	===== -before
+2024-04-25T17:03:08.983+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:03:08.986+0800	INFO	rk-boot-worden/main.go:130	===== -before
+2024-04-25T17:03:14.589+0800	INFO	rk-boot-worden/main.go:124	我的测试 API!
+2024-04-25T17:09:39.250+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:09:39.254+0800	INFO	rk-boot-worden/main.go:130	===== -before
+2024-04-25T17:09:46.278+0800	INFO	rk-boot-worden/main.go:124	我的测试 API!
+2024-04-25T17:10:11.863+0800	INFO	rk-boot-worden/main.go:124	我的测试 API!
+2024-04-25T17:26:18.863+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:26:18.867+0800	INFO	rk-boot-worden/main.go:138	===== -before
+2024-04-25T17:29:11.061+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:29:11.065+0800	INFO	rk-boot-worden/main.go:138	===== -before
+2024-04-25T17:32:30.034+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:32:30.039+0800	INFO	rk-boot-worden/main.go:129	===== -before
+2024-04-25T17:33:02.866+0800	INFO	rk-boot-worden/main.go:123	我的测试 API!
+2024-04-25T17:35:30.677+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:35:45.343+0800	INFO	rk-boot-worden/main.go:128	我的测试 API!
+2024-04-25T17:36:53.147+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:37:00.410+0800	INFO	rk-boot-worden/main.go:130	我的测试 API!

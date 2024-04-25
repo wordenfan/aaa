@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Greeter_Hello_FullMethodName = "/api.v1.Greeter/Hello"
+	Greeter_Hello_FullMethodName  = "/api.v1.Greeter/Hello"
+	Greeter_Person_FullMethodName = "/api.v1.Greeter/Person"
 )
 
 // GreeterClient is the client API for Greeter service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GreeterClient interface {
 	Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
+	Person(ctx context.Context, in *PersonRequest, opts ...grpc.CallOption) (*PersonResponse, error)
 }
 
 type greeterClient struct {
@@ -46,11 +48,21 @@ func (c *greeterClient) Hello(ctx context.Context, in *HelloRequest, opts ...grp
 	return out, nil
 }
 
+func (c *greeterClient) Person(ctx context.Context, in *PersonRequest, opts ...grpc.CallOption) (*PersonResponse, error) {
+	out := new(PersonResponse)
+	err := c.cc.Invoke(ctx, Greeter_Person_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GreeterServer is the server API for Greeter service.
 // All implementations should embed UnimplementedGreeterServer
 // for forward compatibility
 type GreeterServer interface {
 	Hello(context.Context, *HelloRequest) (*HelloResponse, error)
+	Person(context.Context, *PersonRequest) (*PersonResponse, error)
 }
 
 // UnimplementedGreeterServer should be embedded to have forward compatible implementations.
@@ -59,6 +71,9 @@ type UnimplementedGreeterServer struct {
 
 func (UnimplementedGreeterServer) Hello(context.Context, *HelloRequest) (*HelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
+}
+func (UnimplementedGreeterServer) Person(context.Context, *PersonRequest) (*PersonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Person not implemented")
 }
 
 // UnsafeGreeterServer may be embedded to opt out of forward compatibility for this service.
@@ -90,6 +105,24 @@ func _Greeter_Hello_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Greeter_Person_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PersonRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GreeterServer).Person(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Greeter_Person_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GreeterServer).Person(ctx, req.(*PersonRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Greeter_ServiceDesc is the grpc.ServiceDesc for Greeter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -100,6 +133,10 @@ var Greeter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Hello",
 			Handler:    _Greeter_Hello_Handler,
+		},
+		{
+			MethodName: "Person",
+			Handler:    _Greeter_Person_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

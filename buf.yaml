@@ -3,4 +3,3 @@ name: github.com/rk-dev/rk-boot
 build:
     roots:
         - api
-        - third-party/googleapis
