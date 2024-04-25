@@ -72,11 +72,11 @@ func main() {
 	entryGin := rkgin.GetGinEntry("greeter")
 
 	// Router Group
+	entryGin.AddMiddleware(RouterMiddle())
 	redisGroup := entryGin.Router.Group("v3")
 	{
 		redisGroup.GET("/demo_api", demoRequest)
 	}
-	redisGroup.Use(routerMiddle())
 
 	// Error
 	rkmid.SetErrorBuilder(&tools.MyErrorBuilder{})
@@ -110,6 +110,7 @@ func main() {
 	// Run
 	boot.WaitForShutdownSig(context.TODO())
 }
+
 //================================================
 func demoRequest(ctx *gin.Context) {
 	fmt.Println(" 我的测试 API! ")
@@ -117,7 +118,7 @@ func demoRequest(ctx *gin.Context) {
 }
 
 //================================================
-func routerMiddle() gin.HandlerFunc {
+func RouterMiddle() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		fmt.Println("路由分组中间件-before")
 		logger.Info("路由分组中间件-before")
@@ -128,6 +129,7 @@ func routerMiddle() gin.HandlerFunc {
 		fmt.Println("路由分组中间件-after")
 	}
 }
+
 //================================================
 type GreeterServer struct{}
 
@@ -140,6 +142,7 @@ func (server *GreeterServer) Hello(_ context.Context, _ *grt.HelloRequest) (*grt
 		MyMessage: "hello!",
 	}, nil
 }
+
 func (server *GreeterServer) Person(_ context.Context, req *grt.PersonRequest) (*grt.PersonResponse, error) {
 	p := &grt.PersonResponse{
 		Id:    req.GetId(),

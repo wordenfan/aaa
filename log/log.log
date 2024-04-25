@@ -54,3 +54,7 @@
 2024-04-25T17:35:45.343+0800	INFO	rk-boot-worden/main.go:128	我的测试 API!
 2024-04-25T17:36:53.147+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
 2024-04-25T17:37:00.410+0800	INFO	rk-boot-worden/main.go:130	我的测试 API!
+2024-04-25T17:59:07.025+0800	INFO	rk-boot-worden/main.go:63	This is my-logger
+2024-04-25T17:59:07.032+0800	INFO	rk-boot-worden/main.go:122	 =========== 111 
+2024-04-25T17:59:54.259+0800	INFO	rk-boot-worden/main.go:125	路由分组中间件-before
+2024-04-25T17:59:54.260+0800	INFO	rk-boot-worden/main.go:116	我的测试 API!
