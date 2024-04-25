@@ -10,11 +10,17 @@ import (
 	"github.com/rookie-ninja/rk-boot/v2"
 	rkmysql "github.com/rookie-ninja/rk-db/mysql"
 	rkredis "github.com/rookie-ninja/rk-db/redis"
+	rkentry "github.com/rookie-ninja/rk-entry/v2/entry"
 	"github.com/rookie-ninja/rk-gin/v2/boot"
 	rkginctx "github.com/rookie-ninja/rk-gin/v2/middleware/context"
+	_ "github.com/rookie-ninja/rk-grpc/v2/boot"
+	rkgrpc "github.com/rookie-ninja/rk-grpc/v2/boot"
+	"google.golang.org/grpc"
 	"gorm.io/gorm"
 	"net/http"
+	"os"
 	"time"
+	apiv1 "tk-boot-worden/api/gen/v1"
 )
 
 var MySecret = []byte("my-secret")
@@ -44,31 +50,62 @@ func main() {
 	//worden_test.Test_HookFunc("aa")
 	//worden_test.Test_b("bb")
 	//return
+
 	//
+	_ = os.Setenv("DEV_REGION", "qingdao")
 	boot := rkboot.NewBoot()
+
+	// Grpc register
+	entryRpc := rkgrpc.GetGrpcEntry("greeter")
+	entryRpc.AddRegFuncGrpc(registerGreeter)
+	entryRpc.AddRegFuncGw(apiv1.RegisterGreeterHandlerFromEndpoint)
+
+	// Bootstrap
 	boot.Bootstrap(context.TODO())
-	entry := rkgin.GetGinEntry("greeter")
-	entry.Router.GET("/v1/get", Get)
-	entry.Router.POST("/v1/set", Set)
+	entryGin := rkgin.GetGinEntry("greeter")
+	entryGin.Router.GET("/v1/get", GetRedis)
+	entryGin.Router.POST("/v1/set", SetRedis)
 
+	// Redis
 	redisEntry := rkredis.GetRedisEntry("redis")
-	redisClient, _ = redisEntry.GetClient()
-
-	//JWT
-	entry.Router.GET("/v1/greeter", Greeter)
-	entry.Router.GET("/v1/login", Login)
-	//
-	//_ = os.Setenv("DOMAIN", "dev")
-	mysqlEntry := rkmysql.GetMySqlEntry("user-db")
-	userDb = mysqlEntry.GetDB("rk-boot")
-	if !userDb.DryRun {
-		userDb.AutoMigrate(&User{})
+	if redisEntry != nil {
+		redisClient, _ = redisEntry.GetClient()
 	}
-	entry.Router.GET("/v1/user/:id", GetUser)
-	entry.Router.PUT("/v1/user", CreateUser)
+
+	// JWT
+	entryGin.Router.GET("/v1/jwt_token", JwtToken)
+	entryGin.Router.GET("/v1/login", Login)
+
+	// Mysql
+	mysqlEntry := rkmysql.GetMySqlEntry("user-db")
+	if redisEntry != nil {
+		userDb = mysqlEntry.GetDB("rk-boot")
+		if !userDb.DryRun {
+			_ = userDb.AutoMigrate(&User{})
+		}
+	}
+	entryGin.Router.GET("/v1/user/:id", GetUser)
+	entryGin.Router.PUT("/v1/user", CreateUser)
+
+	// Config
+	fmt.Println(rkentry.GlobalAppCtx.GetConfigEntry("my-config").GetString("region"))
 
 	boot.WaitForShutdownSig(context.TODO())
 }
+//================================================
+type GreeterServer struct{}
+
+func registerGreeter(server *grpc.Server) {
+	apiv1.RegisterGreeterServer(server, &GreeterServer{})
+}
+
+func (server *GreeterServer) Hello(_ context.Context, _ *apiv1.HelloRequest) (*apiv1.HelloResponse, error) {
+	return &apiv1.HelloResponse{
+		MyMessage: "hello!",
+	}, nil
+}
+
+//================================================
 func GetUser(ctx *gin.Context) {
 	uid := ctx.Param("id")
 	user := &User{}
@@ -107,15 +144,15 @@ func CreateUser(ctx *gin.Context) {
 // @produce application/json
 // @Param name query string true "Input name"
 // @Success 200 {object} GreeterResponse
-// @Router /v1/greeter [get]
-func Greeter(ctx *gin.Context) {
+// @Router /v1/jwt_token [get]
+func JwtToken(ctx *gin.Context) {
 	jwtToken := rkginctx.GetJwtToken(ctx)
 	ctx.JSON(http.StatusOK, map[string]string{
 		"Message": fmt.Sprintf("Hello %s!", GetPhoneFromJwtToken(jwtToken)),
 	})
 }
 
-// Login API
+//================================================
 func Login(ctx *gin.Context) {
 	token, _ := GenerateAccessToken()
 	ctx.JSON(http.StatusOK, map[string]string{
@@ -144,12 +181,13 @@ func GetPhoneFromJwtToken(jwtToken *jwt.Token) string {
 	return claims.Phone
 }
 
+//================================================
 type KV struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
-func Set(ctx *gin.Context) {
+func SetRedis(ctx *gin.Context) {
 	payload := &KV{}
 
 	if err := ctx.BindJSON(payload); err != nil {
@@ -167,7 +205,7 @@ func Set(ctx *gin.Context) {
 	ctx.Status(http.StatusOK)
 }
 
-func Get(ctx *gin.Context) {
+func GetRedis(ctx *gin.Context) {
 	key := ctx.Query("key")
 
 	cmd := redisClient.Get(ctx.Request.Context(), key)

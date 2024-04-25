@@ -1,6 +1,6 @@
 mysql:
   - name: user-db                     # Required
-    enabled: true                     # Required
+    enabled: false                     # Required
     domain: "*"                       # Optional
     addr: "localhost:13306"           # Optional, default: localhost:3306
     user: root                        # Optional, default: root
@@ -16,7 +16,7 @@ mysql:
       outputPaths: [ "log/db.log" ]
 redis:
   - name: redis                      # Required
-    enabled: true                    # Required
+    enabled: false                    # Required
     addrs: ["localhost:6379"]        # Required, One addr is for single, multiple is for cluster
 gin:
   - name: greeter
@@ -43,3 +43,21 @@ gin:
         enabled: true             # 开启 API Prometheus 中间件,默认路径为 /metrics
       meta:
         enabled: true             # 开启 API 原数据中间件，自动生成 RequestID
+grpc:
+  - name: greeter
+    enabled: true
+    port: 8081
+    # gwPort: 8082              # Optional, default: gateway port will be the same as grpc port if not provided
+    enableReflection: true      # Optional, default: false
+    enableRkGwOption: true      # Optional, default: false
+    commonService:
+      enabled: true             # Optional, Enable common service, default: false
+      pathPrefix: "/rk/v1"      # api path
+    sw:
+      enabled: true             # Optional, default: false
+    docs:
+      enabled: true           # Optional, default: false
+config:
+  - name: my-config
+    envPrefix: "dev"            # Optional, 配合os设置的环境变量大写前缀，eg:DEV_
+    path: "config/default.yaml"
