@@ -16,6 +16,8 @@ import (
 	rkginctx "github.com/rookie-ninja/rk-gin/v2/middleware/context"
 	_ "github.com/rookie-ninja/rk-grpc/v2/boot"
 	rkgrpc "github.com/rookie-ninja/rk-grpc/v2/boot"
+	rkzero "github.com/rookie-ninja/rk-zero/boot"
+	"github.com/zeromicro/go-zero/rest"
 	"google.golang.org/grpc"
 	"gorm.io/gorm"
 	"net/http"
@@ -35,6 +37,7 @@ type CustomClaims struct {
 
 var userDb *gorm.DB
 var redisClient *redis.Client
+var redisEntry *rkredis.RedisEntry
 var logger *rkentry.LoggerEntry
 
 type Base struct {
@@ -62,16 +65,21 @@ func main() {
 	logger = rkentry.GlobalAppCtx.GetLoggerEntry("my-logger")
 	logger.Info("This is my-logger")
 
-	// Grpc register
-	entryRpc := rkgrpc.GetGrpcEntry("greeter")
+	// Grpc register  (bootstrap前)
+	entryRpc := rkgrpc.GetGrpcEntry("go-grpc")
 	entryRpc.AddRegFuncGrpc(registerGreeter)
 	entryRpc.AddRegFuncGw(grt.RegisterGreeterHandlerFromEndpoint)
 
-	// Bootstrap
-	boot.Bootstrap(context.TODO())
-	entryGin := rkgin.GetGinEntry("greeter")
+	// Zero register  (bootstrap前)
+	zeroEntry := rkzero.GetZeroEntry("go-zero")
+	zeroEntry.Server.AddRoute(rest.Route{
+		Method:  http.MethodGet,
+		Path:    "/v1/zero_demo",
+		Handler: ZeroGreeter,
+	})
 
 	// Router Group
+	entryGin := rkgin.GetGinEntry("go-gin")
 	entryGin.AddMiddleware(RouterMiddle())
 	redisGroup := entryGin.Router.Group("v3")
 	{
@@ -82,7 +90,7 @@ func main() {
 	rkmid.SetErrorBuilder(&tools.MyErrorBuilder{})
 
 	// Redis
-	redisEntry := rkredis.GetRedisEntry("redis")
+	redisEntry= rkredis.GetRedisEntry("redis")
 	if redisEntry != nil {
 		redisClient, _ = redisEntry.GetClient()
 	}
@@ -108,7 +116,31 @@ func main() {
 	fmt.Println(rkentry.GlobalAppCtx.GetConfigEntry("my-config").GetString("region"))
 
 	// Run
+	boot.Bootstrap(context.TODO())
 	boot.WaitForShutdownSig(context.TODO())
+}
+
+//================================================
+// Greeter handler
+// @Summary Greeter
+// @Id 1
+// @Tags Hello
+// @version 1.0
+// @Param name query string true "name"
+// @produce application/json
+// @Success 200 {object} GreeterResponse
+// @Router /v1/greeter [get]
+func ZeroGreeter(writer http.ResponseWriter, request *http.Request) {
+	writer.WriteHeader(http.StatusOK)
+	resp := &ZeroGreeterResponse{
+		Message: fmt.Sprintf("Hello %s!", request.URL.Query().Get("name")),
+	}
+	bytes, _ := json.Marshal(resp)
+	writer.Write(bytes)
+}
+
+type ZeroGreeterResponse struct {
+	Message string
 }
 
 //================================================

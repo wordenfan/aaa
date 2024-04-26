@@ -19,3 +19,7 @@ https://www.rkdev.info/
 - google.golang.org/grpc v1.58.2
 - google.golang.org/protobuf v1.31.0
 - github.com/grpc-ecosystem/grpc-gateway/v2 v2.16.0
+
+# go-zero
+- go get github.com/rookie-ninja/rk-zero
+- go get github.com/zeromicro/go-zero/rest
