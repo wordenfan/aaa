@@ -9,7 +9,6 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/rookie-ninja/rk-boot/v2"
 	rkmysql "github.com/rookie-ninja/rk-db/mysql"
-	rkredis "github.com/rookie-ninja/rk-db/redis"
 	rkentry "github.com/rookie-ninja/rk-entry/v2/entry"
 	rkmid "github.com/rookie-ninja/rk-entry/v2/middleware"
 	"github.com/rookie-ninja/rk-gin/v2/boot"
@@ -24,6 +23,7 @@ import (
 	"os"
 	"time"
 	"tk-boot-worden/api/gen/v1"
+	"tk-boot-worden/router"
 	"tk-boot-worden/tools"
 )
 
@@ -37,7 +37,6 @@ type CustomClaims struct {
 
 var userDb *gorm.DB
 var redisClient *redis.Client
-var redisEntry *rkredis.RedisEntry
 var logger *rkentry.LoggerEntry
 
 type Base struct {
@@ -80,22 +79,17 @@ func main() {
 
 	// Router Group
 	entryGin := rkgin.GetGinEntry("go-gin")
-	entryGin.AddMiddleware(RouterMiddle())
-	redisGroup := entryGin.Router.Group("v3")
-	{
-		redisGroup.GET("/demo_api", demoRequest)
-	}
+	//entryGin.AddMiddleware(RouterMiddle())
+	//redisGroup := entryGin.Router.Group("v3")
+	//{
+	//	redisGroup.GET("/demo_api", demoRequest)
+	//}
 
 	// Error
 	rkmid.SetErrorBuilder(&tools.MyErrorBuilder{})
 
-	// Redis
-	redisEntry= rkredis.GetRedisEntry("redis")
-	if redisEntry != nil {
-		redisClient, _ = redisEntry.GetClient()
-	}
-	entryGin.Router.GET("/v1/get", GetRedis)
-	entryGin.Router.POST("/v1/set", SetRedis)
+	// 路由
+	router.InitRouter(entryGin.Router)
 
 	// JWT
 	entryGin.Router.GET("/v1/jwt_token", JwtToken)
@@ -103,7 +97,7 @@ func main() {
 
 	// Mysql
 	mysqlEntry := rkmysql.GetMySqlEntry("user-db")
-	if redisEntry != nil {
+	if mysqlEntry != nil {
 		userDb = mysqlEntry.GetDB("rk-boot")
 		if !userDb.DryRun {
 			_ = userDb.AutoMigrate(&User{})
@@ -120,7 +114,7 @@ func main() {
 	boot.WaitForShutdownSig(context.TODO())
 }
 
-//================================================
+// ================================================
 // Greeter handler
 // @Summary Greeter
 // @Id 1
@@ -143,13 +137,13 @@ type ZeroGreeterResponse struct {
 	Message string
 }
 
-//================================================
+// ================================================
 func demoRequest(ctx *gin.Context) {
 	fmt.Println(" 我的测试 API! ")
 	logger.Info("我的测试 API!")
 }
 
-//================================================
+// ================================================
 func RouterMiddle() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		fmt.Println("路由分组中间件-before")
@@ -162,7 +156,7 @@ func RouterMiddle() gin.HandlerFunc {
 	}
 }
 
-//================================================
+// ================================================
 type GreeterServer struct{}
 
 func registerGreeter(server *grpc.Server) {
@@ -184,10 +178,10 @@ func (server *GreeterServer) Person(_ context.Context, req *grt.PersonRequest) (
 			{Number: "555-4321", Type: grt.PersonResponse_HOME},
 		},
 	}
-	return p,nil
+	return p, nil
 }
 
-//================================================
+// ================================================
 func GetUser(ctx *gin.Context) {
 	uid := ctx.Param("id")
 	user := &User{}
@@ -234,7 +228,7 @@ func JwtToken(ctx *gin.Context) {
 	})
 }
 
-//================================================
+// ================================================
 func Login(ctx *gin.Context) {
 	token, _ := GenerateAccessToken()
 	ctx.JSON(http.StatusOK, map[string]string{
@@ -261,50 +255,4 @@ func GetPhoneFromJwtToken(jwtToken *jwt.Token) string {
 	_ = json.Unmarshal(bytes, claims)
 
 	return claims.Phone
-}
-
-//================================================
-type KV struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
-}
-
-func SetRedis(ctx *gin.Context) {
-	payload := &KV{}
-
-	if err := ctx.BindJSON(payload); err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
-		return
-	}
-
-	cmd := redisClient.Set(ctx.Request.Context(), payload.Key, payload.Value, time.Minute)
-
-	if cmd.Err() != nil {
-		ctx.JSON(http.StatusInternalServerError, cmd.Err())
-		return
-	}
-
-	ctx.Status(http.StatusOK)
-}
-
-func GetRedis(ctx *gin.Context) {
-	key := ctx.Query("key")
-
-	cmd := redisClient.Get(ctx.Request.Context(), key)
-
-	if cmd.Err() != nil {
-		if cmd.Err() == redis.Nil {
-			ctx.JSON(http.StatusNotFound, "Key not found!")
-		} else {
-			ctx.JSON(http.StatusInternalServerError, cmd.Err())
-		}
-		return
-	}
-
-	payload := &KV{
-		Key:   key,
-		Value: cmd.Val(),
-	}
-
-	ctx.JSON(http.StatusOK, payload)
 }
