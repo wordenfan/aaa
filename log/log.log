@@ -2,3 +2,64 @@
 2024-04-27T20:39:22.669+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
 2024-04-27T20:39:22.669+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
 2024-04-27T21:33:24.061+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "0a00415e-665a-4a30-9306-5975d3d50567", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T09:30:31.587+0800	INFO	rk-boot-worden/main.go:65	This is my-logger
+2024-04-28T09:30:31.593+0800	INFO	boot/zero_entry.go:771	Bootstrap zeroEntry	{"eventId": "e349a4ab-47d1-41b0-9668-cfa21aee17ee", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T09:30:31.593+0800	INFO	boot/zero_entry.go:529	SwaggerEntry: http://localhost:8083/sw/
+2024-04-28T09:30:31.593+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
+2024-04-28T09:30:31.593+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
+2024-04-28T09:31:10.577+0800	INFO	rk-boot-worden/main.go:150	路由分组中间件-before
+2024-04-28T09:32:00.004+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "e349a4ab-47d1-41b0-9668-cfa21aee17ee", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T09:32:16.331+0800	INFO	rk-boot-worden/main.go:65	This is my-logger
+2024-04-28T09:32:16.334+0800	INFO	boot/zero_entry.go:771	Bootstrap zeroEntry	{"eventId": "d3bc3ade-c6d7-4dc7-8cb3-47b746488cbb", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T09:32:16.335+0800	INFO	boot/zero_entry.go:529	SwaggerEntry: http://localhost:8083/sw/
+2024-04-28T09:32:16.335+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
+2024-04-28T09:32:16.335+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
+2024-04-28T09:32:28.427+0800	INFO	rk-boot-worden/main.go:150	路由分组中间件-before
+2024-04-28T09:32:48.391+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "d3bc3ade-c6d7-4dc7-8cb3-47b746488cbb", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T09:33:00.578+0800	INFO	rk-boot-worden/main.go:65	This is my-logger
+2024-04-28T09:33:00.580+0800	INFO	boot/zero_entry.go:771	Bootstrap zeroEntry	{"eventId": "a1930ca2-a243-4961-88d3-86d09addc4b4", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T09:33:00.581+0800	INFO	boot/zero_entry.go:529	SwaggerEntry: http://localhost:8083/sw/
+2024-04-28T09:33:00.581+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
+2024-04-28T09:33:00.581+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
+2024-04-28T09:33:20.495+0800	INFO	rk-boot-worden/main.go:150	路由分组中间件-before
+2024-04-28T09:33:33.968+0800	INFO	rk-boot-worden/main.go:150	路由分组中间件-before
+2024-04-28T09:33:44.653+0800	INFO	rk-boot-worden/main.go:150	路由分组中间件-before
+2024-04-28T10:00:10.045+0800	INFO	rk-boot-worden/main.go:150	路由分组中间件-before
+2024-04-28T10:00:14.321+0800	INFO	rk-boot-worden/main.go:150	路由分组中间件-before
+2024-04-28T10:06:47.786+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "a1930ca2-a243-4961-88d3-86d09addc4b4", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:07:01.674+0800	INFO	rk-boot-worden/main.go:65	This is my-logger
+2024-04-28T10:07:01.677+0800	INFO	boot/zero_entry.go:771	Bootstrap zeroEntry	{"eventId": "af6162d9-cc0f-422d-adbd-386253b623a9", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:07:01.678+0800	INFO	boot/zero_entry.go:529	SwaggerEntry: http://localhost:8083/sw/
+2024-04-28T10:07:01.678+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
+2024-04-28T10:07:01.678+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
+2024-04-28T10:09:42.389+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "af6162d9-cc0f-422d-adbd-386253b623a9", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:09:51.434+0800	INFO	rk-boot-worden/main.go:65	This is my-logger
+2024-04-28T10:09:51.437+0800	INFO	boot/zero_entry.go:771	Bootstrap zeroEntry	{"eventId": "4fa96bcb-3b45-4530-b8ba-fb17cfd15bde", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:09:51.438+0800	INFO	boot/zero_entry.go:529	SwaggerEntry: http://localhost:8083/sw/
+2024-04-28T10:09:51.438+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
+2024-04-28T10:09:51.438+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
+2024-04-28T10:11:34.770+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "4fa96bcb-3b45-4530-b8ba-fb17cfd15bde", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:11:49.710+0800	INFO	rk-boot-worden/main.go:65	This is my-logger
+2024-04-28T10:11:49.727+0800	INFO	boot/zero_entry.go:771	Bootstrap zeroEntry	{"eventId": "0ed596fb-190f-4fd5-a03d-3ca1bbf3a24d", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:11:49.728+0800	INFO	boot/zero_entry.go:529	SwaggerEntry: http://localhost:8083/sw/
+2024-04-28T10:11:49.728+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
+2024-04-28T10:11:49.728+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
+2024-04-28T10:12:38.641+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "0ed596fb-190f-4fd5-a03d-3ca1bbf3a24d", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:12:46.850+0800	INFO	rk-boot-worden/main.go:65	This is my-logger
+2024-04-28T10:12:46.854+0800	INFO	boot/zero_entry.go:771	Bootstrap zeroEntry	{"eventId": "80d7727f-cc37-4f90-ba4e-eb7bf728ab06", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:12:46.854+0800	INFO	boot/zero_entry.go:529	SwaggerEntry: http://localhost:8083/sw/
+2024-04-28T10:12:46.854+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
+2024-04-28T10:12:46.854+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
+2024-04-28T10:13:17.070+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "80d7727f-cc37-4f90-ba4e-eb7bf728ab06", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:13:24.331+0800	INFO	rk-boot-worden/main.go:65	This is my-logger
+2024-04-28T10:13:24.332+0800	INFO	boot/zero_entry.go:771	Bootstrap zeroEntry	{"eventId": "08e889c7-f20a-4262-97ec-27d21b82b72c", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:13:24.333+0800	INFO	boot/zero_entry.go:529	SwaggerEntry: http://localhost:8083/sw/
+2024-04-28T10:13:24.333+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
+2024-04-28T10:13:24.333+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
+2024-04-28T10:51:31.685+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "08e889c7-f20a-4262-97ec-27d21b82b72c", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:51:44.529+0800	INFO	rk-boot-worden/main.go:65	This is my-logger
+2024-04-28T10:51:44.535+0800	INFO	boot/zero_entry.go:771	Bootstrap zeroEntry	{"eventId": "1d314956-f9f0-4cc7-8da1-858338bc8dd7", "entryName": "go-zero", "entryType": "ZeroEntry"}
+2024-04-28T10:51:44.536+0800	INFO	boot/zero_entry.go:529	SwaggerEntry: http://localhost:8083/sw/
+2024-04-28T10:51:44.536+0800	INFO	boot/zero_entry.go:532	DocsEntry: http://localhost:8083/docs/
+2024-04-28T10:51:44.536+0800	INFO	boot/zero_entry.go:547	CommonSreviceEntry: http://localhost:8083/zero/common/ready, http://localhost:8083/zero/common/alive, http://localhost:8083/zero/common/info
+2024-04-28T10:52:38.285+0800	INFO	boot/zero_entry.go:771	Interrupt zeroEntry	{"eventId": "1d314956-f9f0-4cc7-8da1-858338bc8dd7", "entryName": "go-zero", "entryType": "ZeroEntry"}
