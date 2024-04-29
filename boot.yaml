@@ -13,7 +13,7 @@ mysql:
         params: ["charset=utf8","parseTime=True","loc=Local"]                   # Optional, default: ["charset=utf8mb4","parseTime=True","loc=Local"]
     logger:
       level: info
-      outputPaths: [ "log/db.log" ]
+      outputPaths: [ "zap_log/rk-boot-db.log" ]
 redis:
   - name: redis                      # Required
     enabled: false                    # Required
@@ -22,7 +22,7 @@ logger:
   - name: my-logger
     level: info
     zap:
-      outputPaths: ["log/log.log"]
+      outputPaths: ["zap_log/rk-boot.log"]
 gin:
   - name: go-gin
     port: 8080                    # 监听端口

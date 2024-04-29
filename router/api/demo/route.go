@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	rkentry "github.com/rookie-ninja/rk-entry/v2/entry"
-	"tk-boot-worden/router/api"
+	"tk-boot-worden/router/router"
 )
 
 var logger *rkentry.LoggerEntry
@@ -13,7 +13,7 @@ type RouterDemo struct{}
 
 func (*RouterDemo) Route(r *gin.Engine) {
 	h := &HandlerDemo{}
-	user_group := r.Group("/v6",RouterMiddle())
+	user_group := r.Group("/v6", RouterMiddle())
 	{
 		user_group.GET("/demo_api", h.demoRequest)
 	}
@@ -21,8 +21,9 @@ func (*RouterDemo) Route(r *gin.Engine) {
 
 // ================================================
 func init() {
-	api.RouterSlice = append(api.RouterSlice, &RouterDemo{})
+	router.RouterSlice = append(router.RouterSlice, &RouterDemo{})
 }
+
 // ================================================
 func RouterMiddle() gin.HandlerFunc {
 	return func(c *gin.Context) {

@@ -1,4 +1,4 @@
-package api
+package router
 
 import (
 	"github.com/gin-gonic/gin"
@@ -18,6 +18,8 @@ func (*RegisterRouter) RouteDistribute(ro RouterInf, r *gin.Engine) {
 	ro.Route(r)
 }
 
+var RouterSlice []RouterInf
+
 func InitRouter(r *gin.Engine) {
 	rg := New()
 	//rg.RouteDistribute(&user.RouterUser{}, r)
@@ -25,10 +27,4 @@ func InitRouter(r *gin.Engine) {
 	for _, router := range RouterSlice {
 		rg.RouteDistribute(router, r)
 	}
-}
-//============================================
-var RouterSlice []RouterInf
-
-func Register(ro ...RouterInf){
-	RouterSlice = append(RouterSlice,ro...)
 }

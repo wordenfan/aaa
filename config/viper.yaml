@@ -1,0 +1,8 @@
+---
+zap:
+  debugFileName: "\\zap_log\\debug.log"
+  infoFileName: "\\zap_log\\info.log"
+  warnFileName: "\\zap_log\\warn.log"
+  maxsize: 500，
+  maxAge: 28，
+  MaxBackups: 3

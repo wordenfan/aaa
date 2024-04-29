@@ -17,15 +17,19 @@ import (
 	rkgrpc "github.com/rookie-ninja/rk-grpc/v2/boot"
 	rkzero "github.com/rookie-ninja/rk-zero/boot"
 	"github.com/zeromicro/go-zero/rest"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"gorm.io/gorm"
+	"log"
 	"net/http"
 	"os"
 	"time"
-	"tk-boot-worden/api/gen/v1"
-	"tk-boot-worden/router/api"
+	grt "tk-boot-worden/api/gen/v1"
+	"tk-boot-worden/config"
 	_ "tk-boot-worden/router/api"
+	"tk-boot-worden/router/router"
 	"tk-boot-worden/tools"
+	"tk-boot-worden/zap_log"
 )
 
 var MySecret = []byte("my-secret")
@@ -64,6 +68,22 @@ func main() {
 	// Logger
 	logger = rkentry.GlobalAppCtx.GetLoggerEntry("my-logger")
 	logger.Info("This is my-logger")
+	//ZapLog,从配置中读取日志配置，初始化日志
+	zap_log_cfg := &zap_log.LogConfig{
+		DebugFileName: config.AppConf.LogConf.Debug_path,
+		InfoFileName:  config.AppConf.LogConf.Info_path,
+		WarnFileName:  config.AppConf.LogConf.Warn_path,
+		MaxSize:       500,
+		MaxAge:        28,
+		MaxBackups:    3,
+	}
+	zap_err := zap_log.InitLogger(zap_log_cfg)
+	if zap_err != nil {
+		log.Fatalln(zap_err)
+	}
+	zap.L().Debug("zap log is succes")
+	zap.L().Info("zap log is succes")
+	zap.L().Warn("zap log is succes")
 
 	// Grpc register  (bootstrap前)
 	entryRpc := rkgrpc.GetGrpcEntry("go-grpc")
@@ -85,7 +105,7 @@ func main() {
 	rkmid.SetErrorBuilder(&tools.MyErrorBuilder{})
 
 	// 路由
-	api.InitRouter(entryGin.Router)
+	router.InitRouter(entryGin.Router)
 
 	// JWT
 	entryGin.Router.GET("/v1/jwt_token", JwtToken)
@@ -141,15 +161,15 @@ func demoRequest(ctx *gin.Context) {
 
 // ================================================
 //func RouterMiddle() gin.HandlerFunc {
-	//return func(c *gin.Context) {
-	//	fmt.Println("路由分组中间件-before")
-	//	logger.Info("路由分组中间件-before")
-	//	// 可以在这里添加任何预处理逻辑，比如验证token、记录日志等
-	//	// ...
-	//	// 然后一定要调用c.Next()来传递给下一个处理器
-	//	c.Next()
-	//	fmt.Println("路由分组中间件-after")
-	//}
+//return func(c *gin.Context) {
+//	fmt.Println("路由分组中间件-before")
+//	logger.Info("路由分组中间件-before")
+//	// 可以在这里添加任何预处理逻辑，比如验证token、记录日志等
+//	// ...
+//	// 然后一定要调用c.Next()来传递给下一个处理器
+//	c.Next()
+//	fmt.Println("路由分组中间件-after")
+//}
 //}
 
 // ================================================

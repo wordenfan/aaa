@@ -2,9 +2,15 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
+	"tk-boot-worden/router/router"
 )
 
 type RouterUser struct{}
+
+// ================================================
+func init() {
+	router.RouterSlice = append(router.RouterSlice, &RouterUser{})
+}
 
 func (*RouterUser) Route(r *gin.Engine) {
 	h := &HandlerUser{}
