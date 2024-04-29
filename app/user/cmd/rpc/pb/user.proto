@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package app.user.cmd.rpc.pb;
+option go_package = "./;user_grpc";
+
+service UcService {
+	rpc UserInfo (UserRequest) returns (UserResponse) {}
+}
+
+//==========================
+message UserRequest {
+	string name = 1;
+}
+
+message UserResponse {
+	string my_message = 1;
+}

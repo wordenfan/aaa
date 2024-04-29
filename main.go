@@ -14,17 +14,14 @@ import (
 	"github.com/rookie-ninja/rk-gin/v2/boot"
 	rkginctx "github.com/rookie-ninja/rk-gin/v2/middleware/context"
 	_ "github.com/rookie-ninja/rk-grpc/v2/boot"
-	rkgrpc "github.com/rookie-ninja/rk-grpc/v2/boot"
 	rkzero "github.com/rookie-ninja/rk-zero/boot"
 	"github.com/zeromicro/go-zero/rest"
 	"go.uber.org/zap"
-	"google.golang.org/grpc"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
 	"os"
 	"time"
-	grt "tk-boot-worden/api/gen/v1"
 	"tk-boot-worden/config"
 	_ "tk-boot-worden/router/api"
 	"tk-boot-worden/router/router"
@@ -65,18 +62,17 @@ func main() {
 	_ = os.Setenv("DEV_REGION", "qingdao")
 	boot := rkboot.NewBoot()
 
-	// Logger
-	logger = rkentry.GlobalAppCtx.GetLoggerEntry("my-logger")
-	logger.Info("This is my-logger")
-	//ZapLog,从配置中读取日志配置，初始化日志
-	zap_log_cfg := &zap_log.LogConfig{
-		DebugFileName: config.AppConf.LogConf.Debug_path,
-		InfoFileName:  config.AppConf.LogConf.Info_path,
-		WarnFileName:  config.AppConf.LogConf.Warn_path,
-		MaxSize:       500,
-		MaxAge:        28,
-		MaxBackups:    3,
+	//
+	conf := viper_conf.Config{}
+	conf_err := conf.InitConfig()
+	if conf_err != nil {
+		log.Fatalln(conf_err)
 	}
+
+	// Logger
+	//logger = rkentry.GlobalAppCtx.GetLoggerEntry("my-logger")
+	//logger.Info("This is my-logger")
+	zap_log_cfg := viper_conf.GetZapLogConf()
 	zap_err := zap_log.InitLogger(zap_log_cfg)
 	if zap_err != nil {
 		log.Fatalln(zap_err)
@@ -86,9 +82,13 @@ func main() {
 	zap.L().Warn("zap log is succes")
 
 	// Grpc register  (bootstrap前)
-	entryRpc := rkgrpc.GetGrpcEntry("go-grpc")
-	entryRpc.AddRegFuncGrpc(registerGreeter)
-	entryRpc.AddRegFuncGw(grt.RegisterGreeterHandlerFromEndpoint)
+	//entryRpc := rkgrpc.GetGrpcEntry("go-grpc")
+	//entryRpc.AddRegFuncGrpc(registerGreeter)
+	//entryRpc.AddRegFuncGw(grt.RegisterGreeterHandlerFromEndpoint)
+	grpcSrc := tools.InitGrpcServer()
+
+	// grpc 注册到 etcd
+	router.RegisterEtcdServer()
 
 	// Zero register  (bootstrap前)
 	zeroEntry := rkzero.GetZeroEntry("go-zero")
@@ -127,6 +127,7 @@ func main() {
 
 	// Run
 	boot.Bootstrap(context.TODO())
+	boot.AddShutdownHookFunc("grpc_stop", grpcSrc.Stop)
 	boot.WaitForShutdownSig(context.TODO())
 }
 
@@ -154,12 +155,6 @@ type ZeroGreeterResponse struct {
 }
 
 // ================================================
-func demoRequest(ctx *gin.Context) {
-	fmt.Println(" 我的测试 API! ")
-	logger.Info("我的测试 API!")
-}
-
-// ================================================
 //func RouterMiddle() gin.HandlerFunc {
 //return func(c *gin.Context) {
 //	fmt.Println("路由分组中间件-before")
@@ -171,31 +166,6 @@ func demoRequest(ctx *gin.Context) {
 //	fmt.Println("路由分组中间件-after")
 //}
 //}
-
-// ================================================
-type GreeterServer struct{}
-
-func registerGreeter(server *grpc.Server) {
-	grt.RegisterGreeterServer(server, &GreeterServer{})
-}
-
-func (server *GreeterServer) Hello(_ context.Context, _ *grt.HelloRequest) (*grt.HelloResponse, error) {
-	return &grt.HelloResponse{
-		MyMessage: "hello!",
-	}, nil
-}
-
-func (server *GreeterServer) Person(_ context.Context, req *grt.PersonRequest) (*grt.PersonResponse, error) {
-	p := &grt.PersonResponse{
-		Id:    req.GetId(),
-		Name:  "worden",
-		Email: "rs@example.com",
-		Phones: []*grt.PersonResponse_PhoneNumber{
-			{Number: "555-4321", Type: grt.PersonResponse_HOME},
-		},
-	}
-	return p, nil
-}
 
 // ================================================
 func GetUser(ctx *gin.Context) {

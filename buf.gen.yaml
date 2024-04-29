@@ -1,21 +1,33 @@
 version: v1beta1
 plugins:
   - name: go
-    out: api/gen
+    out: app/user/cmd/rpc/pb
     opt:
       - paths=source_relative
   - name: go-grpc
-    out: api/gen
+    out: app/user/cmd/rpc/pb
     opt:
       - paths=source_relative
       - require_unimplemented_servers=false
-  - name: grpc-gateway
-    out: api/gen
-    opt:
-      - paths=source_relative
-      - grpc_api_configuration=api/v1/gw_mapping.yaml
-      - allow_repeated_fields_in_body=true
-      - generate_unbound_methods=true
+#  - name: user-grpc-gateway
+#    out: app/user/cmd/rpc/pb
+#    opt:
+#      - paths=source_relative
+#      - grpc_api_configuration=app/user/cmd/rpc/mapping/user_gw_mapping.yaml
+#      - allow_repeated_fields_in_body=true
+#      - generate_unbound_methods=true
+#  - name: go-grpc
+#    out: app/order/cmd/rpc/pb
+#    opt:
+#      - paths=source_relative
+#      - require_unimplemented_servers=false
+#  - name: user-grpc-gateway
+#    out: app/
+#    opt:
+#      - paths=source_relative
+#      - grpc_api_configuration=api/v1/gw_mapping.yaml
+#      - allow_repeated_fields_in_body=true
+#      - generate_unbound_methods=true
 #  - name: openapiv2
 #    out: api/gen
 #    opt:

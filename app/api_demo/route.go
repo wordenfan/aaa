@@ -1,4 +1,4 @@
-package demo
+package api_demo
 
 import (
 	"fmt"

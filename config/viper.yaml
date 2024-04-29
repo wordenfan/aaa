@@ -1,8 +1,16 @@
 ---
 zap:
-  debugFileName: "\\zap_log\\debug.log"
-  infoFileName: "\\zap_log\\info.log"
-  warnFileName: "\\zap_log\\warn.log"
+  debugFileName: "/zap_log/debug.log"
+  infoFileName: "/zap_log/info.log"
+  warnFileName: "/zap_log/warn.log"
   maxsize: 500，
   maxAge: 28，
   MaxBackups: 3
+grpc:
+  addr: "127.0.0.1:8081"
+  name: "user"
+  version: "1.0.0"
+  weight: 2
+etcd:
+  addrs:
+    - "127.0.0.1:2379"

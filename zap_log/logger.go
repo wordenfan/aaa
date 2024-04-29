@@ -18,8 +18,9 @@ import (
 //go get -u github.com/natefinch/lumberjack		# 日志分割
 
 var ZapLog *zap.Logger
+var ZapLogConf *ZapLogConfig
 
-type LogConfig struct {
+type ZapLogConfig struct {
 	DebugFileName string `json:"debugFileName"`
 	InfoFileName  string `json:"infoFileName"`
 	WarnFileName  string `json:"warnFileName"`
@@ -29,7 +30,7 @@ type LogConfig struct {
 }
 
 // InitLogger 初始化Logger
-func InitLogger(cfg *LogConfig) (err error) {
+func InitLogger(cfg *ZapLogConfig) (err error) {
 	writeSyncerDebug := getLogWriter(cfg.DebugFileName, cfg.MaxSize, cfg.MaxBackups, cfg.MaxAge)
 	writeSyncerInfo := getLogWriter(cfg.InfoFileName, cfg.MaxSize, cfg.MaxBackups, cfg.MaxAge)
 	writeSyncerWarn := getLogWriter(cfg.WarnFileName, cfg.MaxSize, cfg.MaxBackups, cfg.MaxAge)
