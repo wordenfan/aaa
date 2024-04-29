@@ -2,7 +2,10 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"google.golang.org/grpc/resolver"
+	"log"
 	viper_conf "tk-boot-worden/config"
+	"tk-boot-worden/discovery"
 )
 
 type RouterInf interface {
@@ -35,12 +38,12 @@ func RegisterEtcdServer() {
 	etcdRegister := discovery.NewResolver(viper_conf.GlobalConf.EtcdConf.AddrS, logs.LG)
 	resolver.Register(etcdRegister)
 	info := discovery.Server{
-		Name:    viper_conf.GrpcConfig.NameName,
-		Addr:    viper_conf.GrpcConfig.Addr,
-		Version: viper_conf.GrpcConfig.Version,
-		Weight:  viper_conf.Grpcconfig.Weight,
+		Name:    viper_conf.GlobalConf.GrpcConf.Name,
+		Addr:    viper_conf.GlobalConf.GrpcConf.Addr,
+		Version: viper_conf.GlobalConf.GrpcConf.Version,
+		Weight:  viper_conf.GlobalConf.GrpcConf.Weight,
 	}
-	r := discovery.NewRegister(config.AppConf.Etcdconfig.Addrs, logs.LG)
+	r := discovery.NewRegister(viper_conf.GlobalConf.EtcdConf.AddrS, logs.LG)
 	_, err := r.Register(info, 2)
 	if err != nil {
 		log.Fatalln(err)
